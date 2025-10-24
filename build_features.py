@@ -15,16 +15,22 @@ def extract_features(img):
 def process_dataset(dataset_path="dataset/wikiart"):
     features, filenames = [], []
     for file in os.listdir(dataset_path):
-        if file.endswith(('.jpg', '.png', '.jpeg')):
+        if file.lower().endswith(('.jpg', '.jpeg', '.png')):
             path = os.path.join(dataset_path, file)
-            img = cv2.imread(path)
-            img = cv2.resize(img, (256, 256))
-            vec = extract_features(img)
-            features.append(vec)
-            filenames.append(file)
+            try:
+                img = cv2.imdecode(np.fromfile(path, dtype=np.uint8), cv2.IMREAD_COLOR)
+                if img is None:
+                    print(f"⚠️  No se pudo leer la imagen: {file}")
+                    continue
+                img = cv2.resize(img, (256, 256))
+                vec = extract_features(img)
+                features.append(vec)
+                filenames.append(file)
+            except Exception as e:
+                print(f"⚠️  Error procesando {file}: {e}")
     np.save("features.npy", features)
     np.save("filenames.npy", filenames)
-    print(f"✅ {len(features)} imágenes procesadas y guardadas.")
+    print(f"✅ {len(features)} imágenes procesadas y guardadas correctamente.")
 
 if __name__ == "__main__":
     process_dataset()
