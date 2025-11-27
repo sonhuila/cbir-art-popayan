@@ -9,7 +9,7 @@ def extract_lbp(img):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     lbp = local_binary_pattern(gray, P=8, R=1, method='uniform')
     hist, _ = np.histogram(lbp.ravel(), bins=np.arange(59))
-    hist = hist / np.sum(hist)
+    #hist = hist / np.sum(hist)
     return hist
 
 # --- Textura 2: Haralick ---

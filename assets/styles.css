@@ -1,4 +1,4 @@
-/* Paleta y fuentes */
+/* ---- PALETA Y FUENTES ---- */
 :root{
   --primary: #7a1c1c;
   --primary-700: #5d1212;
@@ -8,29 +8,27 @@
   --text: #222222;
   --muted: #6b6b6b;
 
-  /* Alturas del header/footer fijos */
   --header-h: 72px;
-  --subbar-h: 48px; /* barra de navegación (opcional/sticky) */
   --footer-h: 56px;
 }
 
-/* Fondo y tipografía general */
+/* ---- FONDO GENERAL ---- */
 html, body, [data-testid="stAppViewContainer"]{
   background: var(--bg);
   color: var(--text);
   font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
-/* Ocultar header nativo de Streamlit para usar el nuestro */
-header[data-testid="stHeader"]{ display: none; }
+/* ---- OCULTAR HEADER NATIVO ---- */
+header[data-testid="stHeader"] { display: none; }
 
-/* Espaciado para que el contenido no quede debajo del header/footer */
+/* ---- ESPACIADO TOP/BOTTOM PARA HEADER Y FOOTER FIJOS ---- */
 [data-testid="stAppViewContainer"]{
-  padding-top: calc(var(--header-h) + var(--subbar-h) + 16px) !important;
-  padding-bottom: calc(var(--footer-h) + 16px) !important;
+  padding-top: calc(var(--header-h) + 24px) !important;
+  padding-bottom: calc(var(--footer-h) + 24px) !important;
 }
 
-/* Header fijo */
+/* ---- HEADER FIJO ---- */
 .topbar{
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -52,16 +50,33 @@ header[data-testid="stHeader"]{ display: none; }
   text-align: center;
 }
 
-/* Sub-barra del menú (queda “sticky”) */
-.subbar{
-  position: sticky; /* se queda pegada debajo del header */
-  top: var(--header-h);
-  z-index: 900;
-  background: var(--surface);
-  border-bottom: 1px solid rgba(0,0,0,.08);
+/* ---- FOOTER FIJO ---- */
+.footer{
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: var(--footer-h);
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 22px;
+  text-align: center;
+  border-top: 4px solid var(--primary-700);
+  z-index: 1000;
 }
 
-/* Hero */
+/* ---- AJUSTES PARA LA SIDEBAR ---- */
+section[data-testid="stSidebar"] {
+  background: var(--surface);
+  top: var(--header-h);
+  height: calc(100vh - var(--header-h) - var(--footer-h));
+  padding-top: 1.5rem !important;
+  width: 280px !important; /* Ajusta el ancho si es necesario */
+  min-width: 280px !important;
+}
+
+/* ---- HERO SECTION ---- */
 .hero{
   position: relative;
   height: 440px;
@@ -86,15 +101,15 @@ header[data-testid="stHeader"]{ display: none; }
   color: #f1f1f1; font-size: 20px; margin-bottom: 22px;
 }
 
-/* Botones */
+/* ---- BOTONES CUSTOM ---- */
 .btn{
   display: inline-block; padding: 12px 22px; border-radius: 10px;
   text-decoration: none !important; font-weight: 700; transition: all .15s ease-in-out;
 }
-.btn-primary{ background: var(--primary); color: #fff !important; border: 2px solid var(--primary-700); }
+.btn-primary{ background: var(--primary); color: #fff !important; border: 2px solid var(--primary-700);}
 .btn-primary:hover{ background: var(--primary-700); transform: translateY(-1px); }
 
-/* Bloques de ayuda */
+/* ---- BLOQUES DE AYUDA ---- */
 .hint{ color: var(--muted); font-size: 13px; margin-top: 6px; }
 .howto{
   max-width: 680px; margin: 16px auto 0; padding: 16px 18px;
@@ -102,7 +117,7 @@ header[data-testid="stHeader"]{ display: none; }
 }
 .howto-title{ font-weight: 700; margin-bottom: 8px; }
 
-/* Tarjetas */
+/* ---- TARJETAS ---- */
 .card{
   background: #fff;
   border: 3px solid #d9c481;
@@ -110,27 +125,15 @@ header[data-testid="stHeader"]{ display: none; }
   box-shadow: 0 4px 10px rgba(0,0,0,.05);
   margin-bottom: 16px;
 }
-.card-body{ padding: 10px 12px 16px; }
-.card-title{ margin-bottom: 6px; font-weight: 600; }
+.card-body{ padding: 10px 12px 16px;}
+.card-title{ margin-bottom: 6px; font-weight: 600;}
 .card-text{ color: #333; }
 
-/* Footer fijo */
-.footer{
-  position: fixed;
-  left: 0; right: 0; bottom: 0;
-  height: var(--footer-h);
-  background: var(--primary);
-  color: #fff; display: flex; align-items: center; justify-content: center;
-  padding: 0 22px; text-align: center;
-  border-top: 4px solid var(--primary-700);
-  z-index: 1000;
-}
-
-/* Afinar botones nativos Streamlit */
+/* ---- AFINAR BOTONES NATIVOS DE STREAMLIT ---- */
 .stButton>button[kind="primary"]{
   background: var(--primary); border-color: var(--primary-700);
 }
 .stButton>button[kind="primary"]:hover{ background: var(--primary-700); }
 
-/* Opcional: ajustar ancho del contenedor principal */
+/* ---- AJUSTE DE ANCHO MAXIMO DE CONTENIDO ---- */
 .block-container{ max-width: 1200px; }
