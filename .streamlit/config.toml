@@ -1,0 +1,16 @@
+# .streamlit/config.toml
+
+# Usamos un tema "custom" para que Streamlit no aplique sus colores por defecto.
+# Dejaremos que nuestro archivo styles.css controle toda la apariencia.
+[theme]
+base="light"
+primaryColor="#7a1c1c"
+backgroundColor="#f8f1e6"
+secondaryBackgroundColor="#f3ead7"
+textColor="#222222"
+
+[server]
+headless = true
+
+[client]
+toolbarMode = "minimal"

@@ -1,5 +1,5 @@
 /* ---- PALETA Y FUENTES ---- */
-:root{
+:root {
   --primary: #7a1c1c;
   --primary-700: #5d1212;
   --accent: #c6a545;
@@ -7,133 +7,128 @@
   --surface: #f3ead7;
   --text: #222222;
   --muted: #6b6b6b;
-
   --header-h: 72px;
   --footer-h: 56px;
 }
 
-/* ---- FONDO GENERAL ---- */
-html, body, [data-testid="stAppViewContainer"]{
-  background: var(--bg);
-  color: var(--text);
-  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+/* ---- ESTILOS GLOBALES ---- */
+body {
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+/* Forzar color de texto en el contenedor principal de la app */
+[data-testid="stAppViewContainer"] > .main > div {
+    color: var(--text);
 }
 
 /* ---- OCULTAR HEADER NATIVO ---- */
-header[data-testid="stHeader"] { display: none; }
+header[data-testid="stHeader"] { display: none !important; }
 
-/* ---- ESPACIADO TOP/BOTTOM PARA HEADER Y FOOTER FIJOS ---- */
-[data-testid="stAppViewContainer"]{
-  padding-top: calc(var(--header-h) + 24px) !important;
+/* ---- ESPACIADO PARA HEADER Y FOOTER FIJOS ---- */
+[data-testid="stAppViewContainer"] {
+  padding-top: calc(var(--header-h)) !important;
   padding-bottom: calc(var(--footer-h) + 24px) !important;
 }
 
-/* ---- HEADER FIJO ---- */
-.topbar{
+/* ---- HEADER Y FOOTER PERSONALIZADOS ---- */
+.topbar, .footer {
   position: fixed;
-  top: 0; left: 0; right: 0;
-  height: var(--header-h);
+  left: 0; right: 0;
   background: var(--primary);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 28px;
-  border-bottom: 4px solid var(--primary-700);
+  border-color: var(--primary-700);
   z-index: 1000;
 }
-.topbar .brand{
-  font-family: "Georgia", "Times New Roman", serif;
+.topbar {
+  top: 0;
+  height: var(--header-h);
+  border-bottom: 4px solid var(--primary-700);
+}
+.footer {
+  bottom: 0;
+  height: var(--footer-h);
+  border-top: 4px solid var(--primary-700);
+}
+.topbar .brand {
+  font-family: "Georgia", serif;
   font-size: 30px;
   font-weight: 700;
-  letter-spacing: .3px;
-  text-align: center;
 }
 
-/* ---- FOOTER FIJO ---- */
-.footer{
+/* ---- ESTILOS PARA LA SIDEBAR FIJA Y AJUSTADA ---- */
+section[data-testid="stSidebar"] {
+  /* --- Posicionamiento --- */
   position: fixed;
-  left: 0; right: 0; bottom: 0;
-  height: var(--footer-h);
-  background: var(--primary);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 22px;
-  text-align: center;
-  border-top: 4px solid var(--primary-700);
+  top: var(--header-h); /* Empieza justo debajo del header */
+  left: 0;
+
+  /* --- Dimensiones --- */
+  /* Esta es la línea MÁGICA:
+     Altura de la ventana (100vh) MENOS la altura del header Y del footer */
+  height: calc(100vh - var(--header-h) - var(--footer-h)) !important;
+  
+  /* --- Estilos Visuales --- */
+  background-color: var(--surface) !important;
+  padding-top: 1.5rem !important;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+  border-right: 1px solid #ddd; /* Opcional: un borde sutil a la derecha */
+  z-index: 999; /* Asegura que esté debajo del header/footer si tienen z-index > 999 */
+}
+
+/* --- Ajustes para Header y Footer --- */
+/* Aseguramos que el header y el footer siempre estén en la capa superior */
+.topbar, .footer {
   z-index: 1000;
 }
 
-/* ---- AJUSTES PARA LA SIDEBAR ---- */
-section[data-testid="stSidebar"] {
-  background: var(--surface);
-  top: var(--header-h);
-  height: calc(100vh - var(--header-h) - var(--footer-h));
-  padding-top: 1.5rem !important;
-  width: 280px !important; /* Ajusta el ancho si es necesario */
-  min-width: 280px !important;
-}
-
-/* ---- HERO SECTION ---- */
-.hero{
-  position: relative;
-  height: 440px;
+/* Base para todos los links de la sidebar */
+[data-testid="stSidebar"] a {
   border-radius: 8px;
-  margin: 12px 18px;
-  background-size: cover;
-  background-position: center;
-  overflow: hidden;
-  box-shadow: 0 8px 22px rgba(0,0,0,.15);
-}
-.hero-overlay{
-  position: absolute; inset: 0;
-  background: linear-gradient(0deg, rgba(0,0,0,.55), rgba(0,0,0,.45));
-  display: grid; place-content: center;
-  text-align: center; padding: 22px;
-}
-.hero-title{
-  color: #fff; font-size: 28px; font-weight: 700;
-  max-width: 980px; margin: 0 auto 10px;
-}
-.hero-subtitle{
-  color: #f1f1f1; font-size: 20px; margin-bottom: 22px;
+  transition: background-color 0.2s, color 0.2s;
 }
 
-/* ---- BOTONES CUSTOM ---- */
-.btn{
-  display: inline-block; padding: 12px 22px; border-radius: 10px;
-  text-decoration: none !important; font-weight: 700; transition: all .15s ease-in-out;
+/* Estilo para los ÍCONOS dentro de los links */
+[data-testid="stSidebar"] a span[data-icon] {
+  color: var(--primary) !important;
 }
-.btn-primary{ background: var(--primary); color: #fff !important; border: 2px solid var(--primary-700);}
-.btn-primary:hover{ background: var(--primary-700); transform: translateY(-1px); }
 
-/* ---- BLOQUES DE AYUDA ---- */
-.hint{ color: var(--muted); font-size: 13px; margin-top: 6px; }
-.howto{
-  max-width: 680px; margin: 16px auto 0; padding: 16px 18px;
-  background: #333; color: #f6f6f6; border-radius: 12px;
+/* Estilo para el TEXTO dentro de los links */
+[data-testid="stSidebar"] a div {
+  color: var(--text) !important;
 }
-.howto-title{ font-weight: 700; margin-bottom: 8px; }
 
-/* ---- TARJETAS ---- */
-.card{
-  background: #fff;
-  border: 3px solid #d9c481;
-  border-radius: 10px; overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0,0,0,.05);
-  margin-bottom: 16px;
+/* Link ACTIVO */
+[data-testid="stSidebar"] a[aria-selected="true"] {
+  background-color: var(--primary) !important;
 }
-.card-body{ padding: 10px 12px 16px;}
-.card-title{ margin-bottom: 6px; font-weight: 600;}
-.card-text{ color: #333; }
-
-/* ---- AFINAR BOTONES NATIVOS DE STREAMLIT ---- */
-.stButton>button[kind="primary"]{
-  background: var(--primary); border-color: var(--primary-700);
+[data-testid="stSidebar"] a[aria-selected="true"] div,
+[data-testid="stSidebar"] a[aria-selected="true"] span[data-icon] {
+  color: white !important;
 }
-.stButton>button[kind="primary"]:hover{ background: var(--primary-700); }
 
-/* ---- AJUSTE DE ANCHO MAXIMO DE CONTENIDO ---- */
-.block-container{ max-width: 1200px; }
+/* Hover en links NO activos */
+[data-testid="stSidebar"] a:hover:not([aria-selected="true"]) {
+  background-color: var(--accent) !important;
+}
+[data-testid="stSidebar"] a:hover:not([aria-selected="true"]) div,
+[data-testid="stSidebar"] a:hover:not([aria-selected="true"]) span[data-icon] {
+  color: #222 !important;
+}
+
+/* ---- BOTONES Y OTROS ---- */
+[data-testid="stPageLink-Button"] {
+  background: var(--primary) !important;
+  border-color: var(--primary-700) !important;
+  color: white !important;
+}
+[data-testid="stPageLink-Button"]:hover {
+  background: var(--primary-700) !important;
+  border-color: var(--primary-700) !important;
+  color: white !important;
+}
+.block-container { max-width: 1200px; }
