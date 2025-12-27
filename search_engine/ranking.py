@@ -107,3 +107,34 @@ def get_top_ids(ranking):
         List[str]: Lista de IDs de imagen ordenados por similitud.
     """
     return [item[0] for item in ranking]
+
+def rank_images_by_single_vector(query_vector, db_vectors, distance_fn, top_k=20):
+    """
+    Calcula la distancia entre un vector de consulta y una lista de vectores de la base de datos,
+    y devuelve los 'top_k' resultados más cercanos.
+
+    Args:
+        query_vector (np.array): El vector de características concatenado de la imagen de consulta.
+        db_vectors (list): Una lista de tuplas (item_id, vector_concatenado) de la base de datos.
+        distance_fn (function): La función de distancia a utilizar (ej. l2_dist).
+        top_k (int): El número de resultados a devolver.
+
+    Returns:
+        list: Una lista de tuplas (distancia, item_id) para los 'top_k' mejores resultados.
+    """
+    if query_vector.size == 0:
+        return []
+
+    results = []
+    for item_id, db_vector in db_vectors:
+        if db_vector.size == 0:
+            continue
+        # Asegurarse de que los vectores tengan la misma longitud
+        if query_vector.shape == db_vector.shape:
+            dist = distance_fn(query_vector, db_vector)
+            results.append((dist, item_id))
+
+    # Ordenar los resultados por distancia (ascendente)
+    results.sort(key=lambda x: x[0])
+
+    return results[:top_k]

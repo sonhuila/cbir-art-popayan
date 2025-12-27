@@ -46,7 +46,7 @@ def l2_dist(x, y):
 
 def hamming_dist(bin1, bin2):
     """
-    Calcula la distancia de Hamming normalizdas para vectores binarios.
+    Calcula la distancia de Hamming normalizadas para vectores binarios.
 
     Mide la proporción de posiciones en las que dos vectores difieren. Es
     la métrica ideal para descriptores binarios.

@@ -4,7 +4,7 @@ import numpy as np
 from PIL import Image
 import cv2
 
-from extractors.normalize_features import normalize_feature_dict
+from extractors.normalize_features import normalize_feature_dict, concatenate_features
 from extractors.color_features import extract_color_moments
 from extractors.texture_features import extract_lbp, extract_haralick
 from extractors.keypoint_features import extract_orb
@@ -63,12 +63,15 @@ def create_database(dataset_path, output_path):
                     # 2. Normalizar el diccionario de características
                     normalized_features = normalize_feature_dict(raw_features)
 
+                    # 3. Concatenar características en un solo vector (opcional)
+                    concatenated_vector = concatenate_features(normalized_features)
+
                     database_entry = {
                         "id": os.path.splitext(filename)[0],
                         "image_path": image_path,
                         "class": main_category,
                         "genre": genre_folder_name,
-                        "features": normalized_features
+                        "features": concatenated_vector
                     }
                     database.append(database_entry)
 

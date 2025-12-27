@@ -67,6 +67,27 @@ def normalize_feature_dict(feat):
         feat_norm["haralick_features"] = l2_normalize(feat["haralick_features"])
 
     if "orb" in feat:
-        feat_norm["orb"] = feat["orb"]
+        feat_norm["orb"] = l2_normalize(feat["orb"])
 
     return feat_norm
+
+def concatenate_features(normalized_feat_dict):
+    """
+    Concatena un diccionario de características normalizadas en un único vector.
+
+    El orden de concatenación es importante y debe ser consistente.
+    """
+    # Define un orden fijo para asegurar consistencia
+    feature_order = ["color_moments", "lbp_histogram", "haralick_features", "orb"]
+    
+    # Crea una lista de vectores de características en el orden definido
+    vectors_to_join = []
+    for key in feature_order:
+        if key in normalized_feat_dict and normalized_feat_dict[key] is not None:
+            vectors_to_join.append(normalized_feat_dict[key].flatten())
+
+    # Concatena todos los vectores en uno solo
+    if not vectors_to_join:
+        return np.array([])
+        
+    return np.concatenate(vectors_to_join)
